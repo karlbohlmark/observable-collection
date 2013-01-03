@@ -1,0 +1,16 @@
+{
+  "name": "observable-collection",
+  "repo": "karlbohlmark/observable-collection",
+  "description": "Observable collection",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "component/emitter": "*",
+    "component/collection": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "scripts": [
+    "index.js"
+  ]
+}

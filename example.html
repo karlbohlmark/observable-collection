@@ -1,0 +1,39 @@
+<meta charset="utf-8">
+<ul id="items">
+	
+</ul>
+<button class="add">add</button>
+<script src="build/build.js"></script>
+<script>
+	var ObservableCollection = require('observable-collection/index.js');
+	var collection = new ObservableCollection([1, 2]);
+
+	var render = function (el) {
+		return function () {
+			el.innerHTML = collection.reduce(function (acc, cur) {
+				return acc + '<li>' + cur + '</li>';
+			}, '')
+		};
+	}(document.querySelector('#items'), collection);
+
+	render()
+
+	collection.on('change', render);
+
+	var addItem = function () {
+		collection.push(collection.max() + 1);
+	};
+
+	var removeItem = function (val) {
+		collection.remove(function (item) {
+			return item == val;
+		});
+	}
+
+	document.querySelector('.add').addEventListener('click', addItem);
+	document.querySelector('ul').addEventListener('click', function (el){
+		if(el.target.tagName == 'LI') {
+			removeItem(el.target.innerHTML);
+		}
+	});
+</script>
