@@ -27,18 +27,24 @@ ObservableCollection.prototype.push = function (item) {
 	this.emit('add', item);
 };
 
-ObservableCollection.prototype.removeAll = function (fn) {
+ObservableCollection.prototype.removeAll = function (fn, silent) {
 	var toRemove = this.models.filter(fn);
-	toRemove.forEach(this.remove.bind(this));
+	var collection = this;
+	toRemove.forEach(function (item) {
+		collection.remove(item, true);
+	});
+	if(!silent) this.emit('remove', toRemove);
 };
 
-ObservableCollection.prototype.remove = function (item) {
-	this.removeAt(this.models.indexOf(item));
+ObservableCollection.prototype.remove = function (item, silent) {
+	this.removeAt(this.models.indexOf(item), silent);
+	if(!silent) this.emit('remove', item);
 };
 
-ObservableCollection.prototype.removeAt = function (index) {
+ObservableCollection.prototype.removeAt = function (index, silent) {
+	var item =this.models[index];
 	this.models.splice(index, 1);
-	this.emit('remove', toRemove);
+	if(!silent) this.emit('remove', item);
 };
 
 module.exports = ObservableCollection;
