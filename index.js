@@ -27,6 +27,12 @@ ObservableCollection.prototype.push = function (item) {
 	this.emit('add', item);
 };
 
+ObservableCollection.prototype.replaceAt = function (index, newItem) {
+	var oldItem = this.models[index]
+	this.models[index] = newItem
+	this.emit('replace', index, oldItem, newItem);
+};
+
 ObservableCollection.prototype.removeAll = function (fn, silent) {
 	var toRemove = this.models.filter(fn);
 	var collection = this;
@@ -37,14 +43,16 @@ ObservableCollection.prototype.removeAll = function (fn, silent) {
 };
 
 ObservableCollection.prototype.remove = function (item, silent) {
-	this.removeAt(this.models.indexOf(item), silent);
-	if(!silent) this.emit('remove', item);
+	var index = this.models.indexOf(item)
+	if (index !== -1) {
+		this.removeAt(index, silent);
+	}
 };
 
 ObservableCollection.prototype.removeAt = function (index, silent) {
 	var item =this.models[index];
 	this.models.splice(index, 1);
-	if(!silent) this.emit('remove', item);
+	if(!silent) this.emit('remove', item, index);
 };
 
 module.exports = ObservableCollection;
