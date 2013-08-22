@@ -23,8 +23,8 @@ ObservableCollection.prototype.triggerChange = function () {
 };
 
 ObservableCollection.prototype.push = function (item) {
-	Collection.prototype.push.call(this, item);
-	this.emit('add', item);
+	var len = Collection.prototype.push.call(this, item);
+	this.emit('add', item, len - 1);
 };
 
 ObservableCollection.prototype.replaceAt = function (index, newItem) {
@@ -39,7 +39,6 @@ ObservableCollection.prototype.removeAll = function (fn, silent) {
 	toRemove.forEach(function (item) {
 		collection.remove(item, true);
 	});
-	if(!silent) this.emit('remove', toRemove);
 };
 
 ObservableCollection.prototype.remove = function (item, silent) {
