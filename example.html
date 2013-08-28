@@ -24,12 +24,12 @@
 
 	var next = document.querySelector('.next')
 
-	var addItem = function () {
+	function addItem() {
 		collection.push(next.value);
 		next.value = (parseInt(next.value) || 0) + 1
 	};
 
-	var removeItem = function (val) {
+	function removeItem(val) {
 		collection.remove(val);
 	}
 
@@ -42,9 +42,16 @@
 	})
 
 	q('.add').addEventListener('click', addItem);
-	q('ul').addEventListener('click', function (el){
-		if(el.target.tagName == 'LI') {
-			removeItem(el.target.innerHTML);
+	q('ul').addEventListener('mousedown', function (e){
+		if(e.target.tagName == 'LI') {
+			if (e.shiftKey) {
+				var index = [].indexOf.call(e.target.parentNode.children, e.target)
+				var toIndex = Math.min(index+1, collection.length())
+				e.preventDefault()
+				return collection.move(index, toIndex)
+			} else {
+				removeItem(e.target.innerHTML);
+			}
 		}
 	});
 </script>

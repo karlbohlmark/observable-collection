@@ -5,6 +5,8 @@ function ObservableCollection (items) {
 	Collection.call(this, items);
 	this.on('add', this.triggerChange.bind(this));
 	this.on('remove', this.triggerChange.bind(this));
+	this.on('replace', this.triggerChange.bind(this));
+	this.on('move', this.triggerChange.bind(this));
 }
 
 ObservableCollection.prototype = Object.create(Collection.prototype);
@@ -31,6 +33,14 @@ ObservableCollection.prototype.replaceAt = function (index, newItem) {
 	var oldItem = this.models[index]
 	this.models[index] = newItem
 	this.emit('replace', index, oldItem, newItem);
+};
+
+ObservableCollection.prototype.move = function (fromIndex, toIndex) {
+	var item = this.models[fromIndex]
+	var newLocationItem = this.models[toIndex]
+	this.models.splice(fromIndex, 1)
+	this.models.splice(toIndex, 0, item)
+	this.emit('move', fromIndex, toIndex, item, newLocationItem);
 };
 
 ObservableCollection.prototype.removeAll = function (fn, silent) {
