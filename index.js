@@ -29,6 +29,12 @@ ObservableCollection.prototype.push = function (item) {
 	this.emit('add', item, len - 1);
 };
 
+ObservableCollection.prototype.reset = function (items) {
+       var oldItems = this.models;
+       this.models = items.slice();
+       this.emit('reset', oldItems, this.models);
+};
+
 ObservableCollection.prototype.replaceAt = function (index, newItem) {
 	var oldItem = this.models[index]
 	this.models[index] = newItem
