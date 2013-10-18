@@ -7,6 +7,7 @@ function ObservableCollection (items) {
 	this.on('remove', this.triggerChange.bind(this));
 	this.on('replace', this.triggerChange.bind(this));
 	this.on('move', this.triggerChange.bind(this));
+	this.on('reset', this.triggerChange.bind(this));
 }
 
 ObservableCollection.prototype = Object.create(Collection.prototype);
