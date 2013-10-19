@@ -30,6 +30,10 @@ ObservableCollection.prototype.push = function (item) {
 	this.emit('add', item, len - 1);
 };
 
+ObservableCollection.prototype.slice = function (begin, end) {
+	return [].slice.call(this.models, begin, end)
+};
+
 ObservableCollection.prototype.reset = function (items) {
        var oldItems = this.models;
        this.models = items.slice();
