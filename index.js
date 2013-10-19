@@ -34,6 +34,12 @@ ObservableCollection.prototype.slice = function (begin, end) {
 	return [].slice.call(this.models, begin, end)
 };
 
+ObservableCollection.prototype.except = function (items) {
+	return this.models.filter(function (item) {
+		return items.indexOf(item) == -1;
+	})
+};
+
 ObservableCollection.prototype.reset = function (items) {
        var oldItems = this.models;
        this.models = items.slice();
