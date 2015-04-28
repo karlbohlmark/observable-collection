@@ -1,5 +1,5 @@
 {
-  "name": "observable-collection",
+  "name": "@karboh/observable-collection",
   "version": "1.0.0",
   "description": "Observable collection",
   "main": "index.js",
